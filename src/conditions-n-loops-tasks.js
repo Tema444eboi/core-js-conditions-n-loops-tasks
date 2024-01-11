@@ -22,11 +22,7 @@
  *  -5 => false
  */
 function isPositive(number) {
-  if (number >= 0) {
-    return true;
-  }
-
-  return false;
+  return number >= 0;
 }
 
 /**
@@ -42,18 +38,12 @@ function isPositive(number) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(a, b, c) {
-  let maxNumber = a;
-
-  if (b > maxNumber) {
-    maxNumber = b;
+function getMaxNumber(...numbers) {
+  let max = numbers[0];
+  for (let i = 0; i < numbers.length; i += 1) {
+    if (max < numbers[i]) max = numbers[i];
   }
-
-  if (c > maxNumber) {
-    maxNumber = c;
-  }
-
-  return maxNumber;
+  return max;
 }
 
 /**
@@ -75,13 +65,16 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
 function canQueenCaptureKing(queen, king) {
-  if (
-    queen.x === king.x ||
-    queen.y === king.y ||
-    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
-  ) {
+  if (queen.x === king.x || queen.y === king.y) return true;
+
+  const minXCoord = Math.min(queen.x, king.x);
+  const maxXCoord = minXCoord === queen.x ? king.x : queen.x;
+  let stepCount = 0;
+
+  while (minXCoord + stepCount < maxXCoord) stepCount += 1;
+
+  if (queen.y + stepCount === king.y || queen.y - stepCount === king.y)
     return true;
-  }
 
   return false;
 }
@@ -105,10 +98,11 @@ function canQueenCaptureKing(queen, king) {
  *  3, 0, 3   => false
  */
 function isIsoscelesTriangle(a, b, c) {
-  if ((a === b || a === c || b === c) && a + b > c && a + c > b && b + c > a) {
-    return true;
+  if (a > 0 && b > 0 && c > 0) {
+    if (a === b && a + b > c) return true;
+    if (a === c && a + c > b) return true;
+    if (b === c && b + c > a) return true;
   }
-
   return false;
 }
 
@@ -126,41 +120,8 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(num) {
-  let result = '';
-
-  if (num >= 10 && num < 40) {
-    const tens = Math.floor(num / 10);
-
-    for (let i = 0; i < tens; i += 1) {
-      result += 'X';
-    }
-  }
-
-  if (num % 10 === 9) {
-    result += 'IX';
-    return result;
-  }
-
-  if (num % 10 === 4) {
-    result += 'IV';
-    return result;
-  }
-
-  if (num % 10 < 5) {
-    for (let i = 0; i < num % 10; i += 1) {
-      result += 'I';
-    }
-  }
-
-  if (num % 10 >= 5) {
-    result += 'V';
-    for (let i = 0; i < (num % 10) - 5; i += 1) {
-      result += 'I';
-    }
-  }
-
-  return result;
+function convertToRomanNumerals(/* num */) {
+  throw new Error('Not implemented');
 }
 
 /**
